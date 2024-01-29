@@ -12,15 +12,17 @@ public class Runigram {
 		// Tests the reading and printing of an image:	
 		Color[][] tinypic = read("tinypic.ppm");
 		print(tinypic);
+		System.out.println("_______________");
+		print(grayScaled(tinypic));
 
 		// Creates an image which will be the result of various 
 		// image processing operations:
-		Color[][] imageOut;
+		//Color[][] imageOut;
 
 		// Tests the horizontal flipping of an image:
-		imageOut = flippedHorizontally(tinypic);
-		System.out.println();
-		print(imageOut);
+		//imageOut = flippedHorizontally(tinypic);
+		//System.out.println();
+		//print(imageOut);
 		
 		//// Write here whatever code you need in order to test your work.
 		//// You can reuse / overide the contents of the imageOut array.
@@ -42,7 +44,16 @@ public class Runigram {
 		// creates from the 3 colors a new Color object, and 
 		// makes pixel (i,j) refer to that object.
 		//// Replace the following statement with your code.
-		return null;
+		for(int i =0; i < numRows; i++){
+			for(int j =0; j < numCols; j++){
+				int R = in.readInt();
+				int G = in.readInt();
+				int B = in.readInt();
+				Color c = new Color(R, G, B);
+				image[i][j] = c;
+			}
+		}
+		return image;
 	}
 
     // Prints the RGB values of a given color.
@@ -61,6 +72,12 @@ public class Runigram {
 	// we can apply the function and then use this function to print the resulting image.
 	private static void print(Color[][] image) {
 		//// Replace this comment with your code
+		for(int i =0; i< image.length; i++){
+			for(int j =0; j< image[0].length;j++){
+				print(image[i][j]);
+			}
+			System.out.println();
+		}
 	}
 	
 	/**
@@ -68,15 +85,32 @@ public class Runigram {
 	 */
 	public static Color[][] flippedHorizontally(Color[][] image) {
 		//// Replace the following statement with your code
-		return null;
+		Color[][] newImage = new Color[image.length][image[0].length];
+
+		for(int i =0; i< newImage.length; i++){
+			
+			for(int j =0; j< newImage[0].length;j++){
+				newImage[i][j] = image[i][image[0].length -1-j];
+				
+			}
+			
+		}
+		return newImage;
 	}
 	
 	/**
 	 * Returns an image which is the vertically flipped version of the given image. 
 	 */
 	public static Color[][] flippedVertically(Color[][] image){
-		//// Replace the following statement with your code
-		return null;
+		Color[][] newImage = new Color[image.length][image[0].length];
+
+		for(int i =0; i< newImage.length; i++){
+			for(int j =0; j< newImage[0].length;j++){
+				newImage[i][j] = image[image.length -1 -i][j];
+			}
+			
+		}
+		return newImage;
 	}
 	
 	// Computes the luminance of the RGB values of the given pixel, using the formula 
@@ -84,7 +118,12 @@ public class Runigram {
 	// the three values r = lum, g = lum, b = lum.
 	public static Color luminance(Color pixel) {
 		//// Replace the following statement with your code
-		return null;
+		int R = pixel.getRed();
+		int G = pixel.getGreen();
+		int B = pixel.getBlue();
+		int l = (int)(0.299 * R + 0.587*G + 0.114 * B);
+		Color lum = new Color(l, l, l);
+		return lum;
 	}
 	
 	/**
@@ -92,7 +131,14 @@ public class Runigram {
 	 */
 	public static Color[][] grayScaled(Color[][] image) {
 		//// Replace the following statement with your code
-		return null;
+		Color[][] greyed = new Color[image.length][image[0].length];
+		for(int i =0; i<image.length; i++){
+			for(int j=0; j < image[0].length; j++){
+				greyed[i][j] = luminance(image[i][j]);
+
+			}
+		}
+		return greyed;
 	}	
 	
 	/**
@@ -100,8 +146,15 @@ public class Runigram {
 	 * The image is scaled (resized) to have the given width and height.
 	 */
 	public static Color[][] scaled(Color[][] image, int width, int height) {
-		//// Replace the following statement with your code
-		return null;
+		Color[][] newImage = new Color[height][width];
+		for(int i =0; i< newImage.length; i++){
+			for(int j =0; j< newImage[0].length;j++){
+				newImage[i][j] = image[(int)(i*image.length / height)][(int)(j*image[0].length/width)];
+			}
+			
+		}
+		return newImage;
+		
 	}
 	
 	/**
@@ -112,7 +165,11 @@ public class Runigram {
 	 */
 	public static Color blend(Color c1, Color c2, double alpha) {
 		//// Replace the following statement with your code
-		return null;
+		double r = ((alpha*c1.getRed()) + ((1-alpha) *c2.getRed()));
+		double g = ((alpha*c1.getGreen()) + ((1-alpha) *c2.getGreen()));
+		double b = ((alpha*c1.getBlue()) + ((1-alpha) *c2.getBlue()));
+		Color c = new Color((int)r, (int)g, (int)b);
+		return c;
 	}
 	
 	/**
@@ -123,9 +180,17 @@ public class Runigram {
 	 */
 	public static Color[][] blend(Color[][] image1, Color[][] image2, double alpha) {
 		//// Replace the following statement with your code
-		return null;
+		Color[][] newImage = new Color[image1.length][image1[0].length];
+		for(int i =0; i< newImage.length; i++){
+			for(int j =0; j< newImage[0].length;j++){
+				newImage[i][j] = blend(image1[i][j], image2[i][j], alpha);
+			}
+			
+		}
+		return newImage;
+		
 	}
-
+	
 	/**
 	 * Morphs the source image into the target image, gradually, in n steps.
 	 * Animates the morphing process by displaying the morphed image in each step.
@@ -134,6 +199,16 @@ public class Runigram {
 	 */
 	public static void morph(Color[][] source, Color[][] target, int n) {
 		//// Replace this comment with your code
+		if(source.length != target.length || source[0].length != target[0].length){
+			target = scaled(target, source[0].length, source.length);
+		}
+		for(int i =0; i<=n ; i++){
+			double alpha = (((double)n)-(double)i)/(double)n;
+			Color[][] a = blend(source, target, alpha);
+			Runigram.setCanvas(a);
+			Runigram.display(a);
+			StdDraw.pause(500);
+		}
 	}
 	
 	/** Creates a canvas for the given image. */
@@ -141,7 +216,7 @@ public class Runigram {
 		StdDraw.setTitle("Runigram 2023");
 		int height = image.length;
 		int width = image[0].length;
-		StdDraw.setCanvasSize(height, width);
+		StdDraw.setCanvasSize(width, height);
 		StdDraw.setXscale(0, width);
 		StdDraw.setYscale(0, height);
         // Enables drawing graphics in memory and showing it on the screen only when
@@ -166,4 +241,3 @@ public class Runigram {
 		StdDraw.show();
 	}
 }
-
