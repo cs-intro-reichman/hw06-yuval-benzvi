@@ -2,10 +2,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Editor4",
+            "request": "launch",
+            "mainClass": "Editor4",
+            "projectName": "hw06-yuval-benzvi_b15a66a9"
+        },
+        {
+            "type": "java",
             "name": "Editor1",
             "request": "launch",
             "mainClass": "Editor1",
-            "projectName": "hw06-yuval-benzvi_b15a66a9",
+            "projectName": "hw06-yuval-benzvi_b15a66a9"
         },
         {
             "type": "java",
