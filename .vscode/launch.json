@@ -1,0 +1,35 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Editor1",
+            "request": "launch",
+            "mainClass": "Editor1",
+            "projectName": "hw06-yuval-benzvi_b15a66a9",
+        },
+        {
+            "type": "java",
+            "name": "Runigram",
+            "request": "launch",
+            "mainClass": "Runigram",
+            "projectName": "hw06-yuval-benzvi_b15a66a9"
+        },
+        {
+            "type": "java",
+            "name": "ColorDemo",
+            "request": "launch",
+            "mainClass": "ColorDemo",
+            "projectName": "hw06-yuval-benzvi_b15a66a9"
+        },
+        {
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/app.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "args": "two  "
+        }
+    ]
+}
